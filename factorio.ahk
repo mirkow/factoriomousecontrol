@@ -7,7 +7,7 @@ deadzone := 0.15
 toggle := 0
 
 
-SetTimer, Run, 50
+;SetTimer, Run, 50
 	
 Run:	
 {	
@@ -19,7 +19,7 @@ Run:
 		;MsgBox, %class%
 		halfw := width/2
 		halfh := height/2
-		;FileAppend, %class% po: %y% w: %halfh%n, D:\ahklog.txt
+		;FileAppend, %class% po: %y% w: %halfh%`n, D:\ahklog.txt
 		if (x > halfw * (1+deadzone))
 		{
 			if(toggle)
@@ -85,8 +85,22 @@ Run:
 }
 
 #IfWinActive, ahk_class ALEX
-~RButton::toggle := true
-	
+~RButton::
+	toggle := true
+	state := GetKeyState("RButton", "D") 
+	;FileAppend, down: %class% state: %state%`n, D:\ahklog.txt
+	while GetKeyState("RButton", "D") && toggle
+	{
+		GoSub, Run
+		sleep, 30
+	}
+	;FileAppend, down finished`n, D:\ahklog.txt
+	return
 #IfWinActive, ahk_class ALEX	
-~RButton Up::toggle := false
+~RButton Up::
+	toggle := false
+	state := GetKeyState("RButton", "D") 
+	;FileAppend, up:  %class% state: %state%`n, D:\ahklog.txt
+	GoSub, Run
+	return
 
