@@ -8,4 +8,3 @@ If the the right mouse button is pressed, the character will run towards the mou
 - Install autohotkey (www.autohotkey.com)
 - Run factorio.ahk
 - Have Fun
-- 
